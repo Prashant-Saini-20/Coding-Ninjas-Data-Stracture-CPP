@@ -1,0 +1,28 @@
+/*
+For a given a singly linked list of integers and a position 'i', print the node data at the 'i-th' position.
+
+Note : Assume that the Indexing for the singly linked list always starts from 0.
+If the given position 'i',  is greater than the length of the given singly linked list, then don't print anything.
+
+Sample Input 1 :
+1
+3 4 5 2 6 1 9 -1
+3
+Sample Output 1 :
+2
+*/
+
+void printIthNode(Node *head, int i)
+{
+    //Write your code here
+    int count=0;
+    Node* temp=head;
+    while(temp!=NULL&&count<i)
+    {
+        temp=temp->next;
+        count++;
+    }
+    if(temp==NULL)
+        return;
+    cout<<temp->data;
+}

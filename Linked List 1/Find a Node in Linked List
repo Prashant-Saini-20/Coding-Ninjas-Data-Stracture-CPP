@@ -1,0 +1,36 @@
+/*
+You have been given a singly linked list of integers.
+Write a function that returns the index/position of integer data denoted by 'N' (if it exists). Return -1 otherwise.
+
+Constraints :
+1 <= T <= 10^2
+0 <= M <= 10^5
+Where 'M' is the size of the singly linked list.
+
+Sample Input 1 :
+2
+3 4 5 2 6 1 9 -1
+5
+10 20 30 40 50 60 70 -1
+6
+Sample Output 1 :
+2
+-1
+*/
+
+
+
+int findNode(Node *head, int n){
+    if(head==NULL)
+        return -1;
+    Node* temp = head;
+    int count=0;
+    while(temp!=NULL)
+    {
+        if(temp->data==n)
+            return count;
+        temp=temp->next;
+        count++;
+    }
+    return -1;
+}

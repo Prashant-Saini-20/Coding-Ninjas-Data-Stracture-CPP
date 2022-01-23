@@ -1,0 +1,44 @@
+/*
+Given a singly linked list of integers, sort it using 'Bubble Sort'.
+
+Constraints :
+0 <= M <= 10^3
+Where M is the size of the singly linked list
+
+Sample Output 1 :
+10 -5 9 90 5 67 1 89 -1
+
+Sample Output 1 :
+-5 1 5 9 10 67 89 90 
+*/
+
+
+Node *bubbleSort(Node *head){
+    Node * i=head;
+    while(i){
+        Node *j=head;
+        Node *prev=head;
+        while(j->next){
+            Node* temp=j->next;
+            if(j->data>temp->data){
+                if(j==head){
+                    j->next=temp->next;
+                    temp->next=j;
+                    prev=temp;
+                    head=prev;
+                }
+                else{
+                    j->next=temp->next;
+                    temp->next=j;
+                    prev->next=temp;
+                    prev=temp;
+                }
+                continue;
+            }
+            prev=j;
+            j=j->next;
+        }
+        i=i->next;
+    }
+    return head;
+}

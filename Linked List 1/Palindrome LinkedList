@@ -1,0 +1,48 @@
+/*
+You have been given a head to a singly linked list of integers.
+Write a function check to whether the list given is a 'Palindrome' or not.
+
+Sample Input 1 :
+1
+9 2 3 3 2 9 -1
+Sample Output 1 :
+true
+*/
+
+Node *reverse(Node *head){
+    Node *p=head,*q=NULL,*r=NULL;
+    while(p){
+        r=q;
+        q=p;
+        p=p->next;
+        q->next=r;
+    }
+    head=q;
+    return q;
+}
+int length(Node *head){
+    Node *temp=head;
+    if(temp==NULL) return 0;
+    return 1+length(temp->next);
+}
+
+bool isPalindrome(Node *head){
+    if(head==NULL) return true;
+    Node *temp=head;
+    int l=length(head);
+    int count=0;
+    while(count<(l/2)-1){
+        temp=temp->next;
+        count++;
+    }
+    Node *temp2=temp->next;
+    temp->next=NULL;
+    Node *reverseHead=reverse(temp2);
+        
+    while(head && reverseHead){
+        if(head->data != reverseHead->data) return false;
+        head=head->next;
+        reverseHead=reverseHead->next;
+    }
+	return true;
+}

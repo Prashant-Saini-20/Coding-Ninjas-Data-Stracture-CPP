@@ -1,0 +1,38 @@
+/*
+Given a positive integer 'n', find and return the minimum number of steps that 'n' has to take to get reduced to 1. You can perform any one of the following 3 steps:
+1.) Subtract 1 from it. (n = n - 1)
+2.) If its divisible by 2, divide by 2.( if n % 2 == 0, then n = n / 2 )
+3.) If its divisible by 3, divide by 3. (if n % 3 == 0, then n = n / 3 )
+
+Input format : The first and the only line of input contains an integer value, 'n'.
+Output format : Print the minimum number of steps.
+
+Sample Input 1 :
+4
+Sample Output 1 :
+2 
+Explanation of Sample Output 1 :
+For n = 4
+Step 1 :  n = 4 / 2  = 2
+Step 2 : n = 2 / 2  =  1 
+*/
+
+
+#include<cmath>
+int countMinStepsToOne(int n){
+	
+    if(n==1) return 0;
+    int x=100,y=100,z=100;
+    
+    x=countMinStepsToOne(n-1);
+    
+    if(n%3==0){
+        y=countMinStepsToOne(n/3);
+    }
+    else if(n%2==0){
+        z=countMinStepsToOne(n/2);
+    }
+    
+    int ans=min(x,min(y,z));
+    return 1+ans;
+}

@@ -1,0 +1,77 @@
+/*
+A thief is robbing a store and can carry a maximal weight of W into his knapsack.
+There are N items and ith item weighs wi and is of value vi.
+Considering the constraints of maximum weight that knapsack can carry, you have to find and return the maximum value that thief can generate by stealing items.
+Note : Space complexity should be O(W).
+
+Input Format :
+The first line contains an integers, that denote the value of N.
+The following line contains N space separated integers, that denote the values of weight of items.
+The following line contains N space separated integers, that denote the values associated with the items.
+The following line contains an integer that denote the value of W. W denotes maximum weight that thief can carry.
+
+Output Format :
+The first and only line of output contains the maximum value that thief can generate, as described in the task.
+
+Sample Input 1 :
+4
+1 2 4 5
+5 4 8 6
+5
+Sample Output 1 :
+13
+*/
+
+
+
+//MEMOIZATION
+/*int knapsack(int *weights,int *values,int W,int n,int **dp){
+    if(n == 0 || W == 0)
+        return 0;
+    if(dp[n][W] > -1)
+        return dp[n][W];
+    else{
+    
+        if(weights[0] > W)
+            dp[n][W] = knapsack(weights+1,values+1,W,n-1,dp);
+        else{
+            int x=knapsack(weights+1,values+1,W-weights[0],n-1,dp) + values[0];
+            int y=knapsack(weights+1,values+1,W,n-1,dp);
+            dp[n][W] = max(x,y);
+        }
+    }
+    return dp[n][W];
+}
+int knapsack(int* weights, int* values, int n, int W) {
+	int **dp = new int*[n+1];
+    for(int i=0;i<=n;i++){
+        dp[i] = new int[W+1];
+        for(int j=0;j<=W;j++)
+            dp[i][j] = -1;
+    }
+    return knapsack(weights,values,W,n,dp);
+}*/
+//DP
+int knapsack(int* weights, int* values, int n, int W){
+    int **output = new int*[n+1];
+    for(int i=0;i<=n;i++){
+        output[i] = new int[W+1];
+    }
+    
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=W;j++){
+            if(i==0 || j==0){
+                output[i][j]=0;
+            }
+            else if(weights[i-1] <= j){
+                int x=output[i-1][j-weights[i-1]]+values[i-1];
+                int y=output[i-1][j];
+                output[i][j]=max(x,y);
+            }
+            else{
+                output[i][j]=output[i-1][j];
+            }
+        }
+    }
+    return output[n][W];
+}

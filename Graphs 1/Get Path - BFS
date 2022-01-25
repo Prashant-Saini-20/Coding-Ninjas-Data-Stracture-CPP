@@ -1,0 +1,84 @@
+/*
+Given an undirected graph G(V, E) and two vertices v1 and v2 (as integers), find and print the path from v1 to v2 (if exists).
+Print nothing if there is no path between v1 and v2.
+Find the path using BFS and print the shortest path available.
+Note:
+1. V is the number of vertices present in graph G and vertices are numbered from 0 to V-1. 
+2. E is the number of edges present in graph G.
+3. Print the path in reverse order. That is, print v2 first, then intermediate vertices and v1 at last.
+4. Save the input graph in Adjacency Matrix.
+
+Sample Input 1 :
+4 4
+0 1
+0 3
+1 2
+2 3
+1 3
+Sample Output 1 :
+3 0 1
+*/
+
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <unordered_map>
+using namespace std;
+
+vector<int> getpathBFS(int **edges,int n,bool *visited,int s,int e,vector<int> &ansVec){
+    queue<int> q;
+    unordered_map<int,int> map;
+    visited[s]=true;
+    q.push(s);
+    while(!q.empty()){
+        int first=q.front();
+        q.pop();
+        if(first==e){
+            ansVec.push_back(e);
+            int i=e;
+            while(i!=s){
+                ansVec.push_back(map[i]);
+                i=map[i];
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(edges[first][i]==1 && !visited[i]){
+                visited[i]=true;
+                q.push(i);
+                map[i]=first;
+            }
+        }
+    }
+    return ansVec;
+}
+
+int main() {
+    int n,ed;
+	cin >> n >> ed;
+    int **edges = new int*[n];
+    for(int i=0;i<n;i++){
+        edges[i] = new int[n];
+        for(int j=0;j<n;j++){
+            edges[i][j] = 0;
+        }
+    }
+    for(int i=0;i<ed;i++){
+        int f,s;
+        cin >> f >> s;
+        edges[f][s] = 1;
+        edges[s][f] = 1;
+    }
+    int s,e; cin >> s >> e;
+    
+    bool *visited=new bool[n];
+    for(int i=0;i<n;i++){
+    	visited[i]=false;
+    }
+    
+    vector<int> ansVec;
+    ansVec=getpathBFS(edges,n,visited,s,e,ansVec);
+    for(int i=0;i<ansVec.size();i++){
+        cout << ansVec[i] << " ";
+    }
+}

@@ -1,0 +1,46 @@
+/*
+It's Gary's birthday today and he has ordered his favourite square cake consisting of '0's and '1's .
+But Gary wants the biggest piece of '1's and no '0's .
+A piece of cake is defined as a part which consist of only '1's, and all '1's share an edge with each other on the cake.
+Given the size of cake N and the cake, can you find the count of '1's in the biggest piece of '1's for Gary ?
+
+Sample Input 1:
+2
+1 1
+0 1
+Sample Output 1:
+3
+*/
+
+
+int getCount(vector<vector<int>> &cake, int n, int i, int j, bool **visited){
+    visited[i][j]=true;
+    int count=0;
+    if(0<=j+1 && j+1<n && !visited[i][j+1] && cake[i][j+1])
+        count+=getCount(cake,n,i,j+1,visited);
+    if(0<=j-1 && j-1<n && !visited[i][j-1] && cake[i][j-1])
+        count+=getCount(cake,n,i,j-1,visited);
+    if(0<=i-1 && i-1<n && !visited[i-1][j] && cake[i-1][j])
+    	count+=getCount(cake,n,i-1,j,visited);
+    if(0<=i+1 && i+1<n && !visited[i+1][j] && cake[i+1][j])
+        count+=getCount(cake,n,i+1,j,visited);
+    return count+1;
+}
+int getBiggestPieceSize(vector<vector<int>> &cake, int n) {
+    bool **visited=new bool*[n];
+    for(int i=0;i<n;i++){
+        visited[i]=new bool[n];
+        for(int j=0;j<n;j++) visited[i][j]=false;
+    }
+    int x=0;
+    int max=0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(cake[i][j] && !visited[i][j]){
+                x=getCount(cake,n,i,j,visited);
+                if(max<x) max=x;
+            }
+        }
+    }
+    return max;
+}

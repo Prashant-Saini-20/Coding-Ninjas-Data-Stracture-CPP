@@ -1,0 +1,72 @@
+/*
+Given an undirected graph G(V,E), find and print all the connected components of the given graph G.
+Note:
+1. V is the number of vertices present in graph G and vertices are numbered from 0 to V-1. 
+2. E is the number of edges present in graph G.
+3. You need to take input in main and create a function which should return all the connected components.And then print them in the main, not inside function.
+
+Sample Input 1:
+4 2
+0 1
+2 3
+Sample Output 1:
+0 1 
+2 3
+*/
+
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+vector<int> fillBucket(int **edges, int n, int sv, bool *visited, vector<int> &bucket){
+	queue<int> q;
+	q.push(sv);
+	visited[sv] = true;
+	while(!q.empty()){
+		int first=q.front();
+		q.pop();
+		bucket.push_back(first);
+		for(int i=0;i<n;i++){
+			if(edges[first][i]==1 && !visited[i]){
+				visited[i]=true;
+				q.push(i);
+			}
+		}
+	}
+    return bucket;
+}
+void BFS(int **edges, int n){
+    bool *visited=new bool[n];
+    for(int i=0;i<n;i++) visited[i] = false;
+    for(int i=0;i<n;i++){
+        if(!visited[i]){
+            vector<int> bucket;
+            bucket=fillBucket(edges,n,i,visited,bucket);
+            sort(bucket.begin(),bucket.end());
+            for(int i=0;i<bucket.size();i++){
+                cout << bucket[i] << " ";
+            }
+            cout << endl;
+        }
+    }
+}
+int main(){
+	int n,e;
+	cin >> n >> e;
+    int **edges = new int*[n];
+    for(int i=0;i<n;i++){
+        edges[i] = new int[n];
+        for(int j=0;j<n;j++) edges[i][j] = 0;
+    }
+	for(int i=0;i<e;i++){
+        int f,s;
+        cin >> f >> s;
+        edges[f][s] = 1;
+        edges[s][f] = 1;
+    }
+    
+    BFS(edges,n);
+}

@@ -1,0 +1,34 @@
+/*
+Given a random integer array A of size N. Find and print the count of pair of elements in the array which sum up to 0.
+Note: Array A can contain duplicate elements as well.
+
+Sample Input 1:
+5
+2 1 -2 2 3
+Sample Output 1:
+2
+*/
+
+
+#include <algorithm>
+#include <unordered_map>
+int pairSum(int *arr, int n) {
+    
+	unordered_map<int,int> um;
+    int count=0;
+    
+    for(int i=0;i<n;i++){
+        um[arr[i]]++;
+    }
+    for(int i=0;i<n;i++){
+        if(arr[i]==0) continue;
+        if(um[-arr[i]]>0){
+            count+=um[arr[i]]*um[-arr[i]];
+            um[arr[i]]=0;
+            um[-arr[i]]=0;
+        }
+    }
+    int et=um[0];
+    count+=(et*(et-1))/2;
+    return count;
+}

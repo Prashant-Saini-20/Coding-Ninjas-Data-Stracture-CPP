@@ -1,0 +1,41 @@
+/*
+You are given an array of unique integers that contain numbers in random order.
+You have to find the longest possible sequence of consecutive numbers using the numbers from given array.
+You need to return the output array which contains starting and ending element.
+If the length of the longest possible sequence is one, then the output array must contain only single element.
+
+Sample Input 1 :
+13
+2 12 9 16 10 5 3 20 25 11 1 8 6 
+Sample Output 1 :
+8 12 
+*/
+
+
+#include <unordered_map>
+vector<int> longestConsecutiveIncreasingSequence(int *arr, int n){
+    vector<int> ans;
+    unordered_map<int,int> map;
+    for(int i=0;i<n;i++){
+        map[arr[i]]=1;
+    }
+    int max=0;
+    int start=0;
+    
+    for(int i=0;i<n;i++){
+        int x=arr[i];
+        int length=0;
+        
+        while(map.count(x)>0){  
+            length++;
+            x++;
+        }
+        if(length>max){  
+            max=length;
+            start=arr[i];
+        }   
+    }
+    ans.push_back(start);
+    ans.push_back(start+max-1);
+    return ans;
+}

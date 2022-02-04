@@ -1,0 +1,28 @@
+/*
+Given an array A of random integers and an integer k, find and return the kth largest element in the array.
+Note: Try to do this question in less than O(N * logN) time.
+
+Sample Input 1 :
+6
+9 4 8 7 11 3
+2
+Sample Output 1 :
+9
+*/
+
+
+#include<queue>
+int kthLargest(int* arr, int n, int k) {
+    vector<int> v;
+    priority_queue<int,vector<int>,greater<int>> pq;
+    for(int i=0;i<k;i++){
+        pq.push(arr[i]);
+    }
+    for(int i=k;i<n;i++){
+        if(pq.top()<arr[i]){
+            pq.pop();
+            pq.push(arr[i]);
+        }
+    }
+    return pq.top();
+}

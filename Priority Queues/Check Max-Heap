@@ -1,0 +1,23 @@
+/*
+Given an array of integers, check whether it represents max-heap or not.
+Return true if the given array represents max-heap, else return false.
+
+Sample Input 1:
+8
+42 20 18 6 14 11 9 4
+Sample Output 1:
+true
+*/
+
+
+bool isMaxHeap(int arr[], int n) {
+
+    for(int i=0;i<n;i++){
+        int lci=(2*i)+1;
+        int rci=(2*i)+2;
+        if(lci < n && arr[i]<arr[lci]) return false;
+        if(rci < n && arr[i]<arr[rci]) return false;
+    }
+    return true;
+
+}

@@ -1,0 +1,17 @@
+/*
+Given a generic tree, find and return the sum of all nodes present in the given tree.
+
+Sample Input 1:
+10 3 20 30 40 2 40 50 0 0 0 0 
+Sample Output 1:
+190
+*/
+
+
+int sumOfNodes(TreeNode<int>* root) {
+    int ans=root->data;
+    for(int i=0;i<root->children.size();i++){
+        ans+=sumOfNodes(root->children[i]);
+    }
+    return ans;
+}

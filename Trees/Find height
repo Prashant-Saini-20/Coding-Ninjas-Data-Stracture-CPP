@@ -1,0 +1,23 @@
+/*
+Given a generic tree, find and return the height of given tree.
+
+Sample Input 1:
+10 3 20 30 40 2 40 50 0 0 0 0 
+Sample Output 1:
+3
+*/
+
+
+int getHeight(TreeNode<int>* root) {
+    int height[root->children.size()];
+    for(int i=0;i<root->children.size();i++){
+        height[i]=getHeight(root->children[i]);
+    }
+    int max=0;
+    for(int j=0;j<root->children.size();j++){
+        if(height[j]>max){
+            max=height[j];
+        }
+    }
+    return max+1;
+}
